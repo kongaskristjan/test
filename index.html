@@ -1,0 +1,68 @@
+i<!DOCTYPE html>
+<html>
+<body>
+
+<h1 id="first">My First Heading</h1>
+
+<p>My first paragraph.</p>
+
+<!-- Load TensorFlow.js. This is required to use MobileNet. -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.1"> </script>
+<!-- Load the MobileNet model. -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet"> </script>
+
+<!-- Replace this with your image. Make sure CORS settings allow reading the image! -->
+<img id="img" src="https://s3-ap-southeast-1.amazonaws.com/investingnote-production-webbucket/attachments/41645da792aef1c5054c33de240a52e2c32d205e.png" crossorigin="anonymous"></img>
+<!--<img id="img" src="https://www.thegoldcoastdog.com/wp-content/uploads/2018/04/bronx-dog-training-224x224.jpg" crossorigin="anonymous"></img>-->
+<!--<img id="img" src="cat.jpg" crossorigin=null></img>-->
+
+<!-- Place your code in the script tag below. You can also use an external .js file -->
+<script>
+  // Notice there is no 'import' statement. 'mobilenet' and 'tf' is
+  // available on the index-page because of the script tag above.
+
+  const img = document.getElementById('img');
+
+  // Load the model.
+  mobilenet.load().then(model => {
+    // Classify the image.
+    console.log(img);
+
+    let t0 = performance.now();
+    let total = 500;
+    preds = []
+    for(let i = 0; i < total; ++i) {
+        preds.push(0);
+    }
+    for(let i = 0; i < total; ++i) {
+    promise = model.classify(img);
+    //predictions = promise;
+    promise.then(predictions => {
+        preds[i] = (performance.now() - t0).toFixed(0);
+      document.getElementById("first").innerHTML = total + ": " + preds;
+      //console.log('Predictions: ');
+      //console.log(predictions);
+    });
+    console.log(promise);
+    }
+  });
+</script>
+
+
+
+
+
+
+<!--
+<img id='dog' src='https://www.thegoldcoastdog.com/wp-content/uploads/2018/04/bronx-dog-training-224x224.jpg'/>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.1"> </script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@1.0.0"> </script>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.0/dist/tf.min.js"></script>
+
+<script src="test.js"></script>
+-->
+</body>
+</html>
+
